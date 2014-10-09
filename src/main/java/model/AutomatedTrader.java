@@ -6,11 +6,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by fati on 10/8/14.
  */
-public class AutomatedTrader {
+public class AutomatedTrader implements TradingAlgorithm{
+
+    Lock buildTradeLock = new ReentrantLock();
 
     Bank bank = new Bank();
     public String[] productNames;
@@ -25,21 +29,30 @@ public class AutomatedTrader {
         }
     }
 
-    public void setNewPrice(Price newPrice) {
-        String productName = newPrice.getProduct().getName();
-        double numericPrice = newPrice.getNumericalPrice();
-        List<Double> prices = pricesByProductName.get(productName);
-        prices.add(numericPrice);
-        int size = prices.size();
-        if (size >= 4){
-            double sum = 0;
-            for (int i = size-4; i < size; i++) {
-                 sum += prices.get(i);
+    public Trade buildTrades(Price newPrice) {
+        try {
+            buildTradeLock.lock();
+            String productName = newPrice.getProduct().getName();
+            double numericPrice = newPrice.getNumericalPrice();
+            List<Double> prices = pricesByProductName.get(productName);
+            prices.add(numericPrice);
+            int size = prices.size();
+            if (size >= 4) {
+                double sum = 0;
+                for (int i = size - 4; i < size; i++) {
+                    sum += prices.get(i);
+                }
+                double avg = sum / 4;
+                if (numericPrice > avg) {
+                    bank.order(newPrice, 1000, Direction.BUY);
+                    return new Trade(productName, numericPrice, Direction.BUY, 1000);
+                }
             }
-            double avg = sum/4;
-            if (numericPrice > avg){
-                bank.order(newPrice, 1000, Direction.BUY);
-            }
+        } finally {
+            buildTradeLock.unlock();
         }
+        return null;
     }
+
+
 }

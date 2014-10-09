@@ -28,7 +28,7 @@ public class MarketDataProvider {
         autoTrader = new AutomatedTrader(productNames);
         for (int i = 0; i < 1000; i++) {
             Price price = generatePrice();
-            autoTrader.setNewPrice(price);
+            Trade trade = autoTrader.buildTrades(price);
         }
     }
 }

@@ -5,16 +5,23 @@ package model;
  */
 public class Trade {
 
-    private Product product;
+    private String productName;
     private double numericPrice;
     private Direction direction;
 
-    public Product getProduct() {
-        return product;
+    public Trade(String productName, double numericPrice, Direction direction, int notional) {
+        this.productName = productName;
+        this.numericPrice = numericPrice;
+        this.direction = direction;
+        this.notional = notional;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public double getNumericPrice() {
