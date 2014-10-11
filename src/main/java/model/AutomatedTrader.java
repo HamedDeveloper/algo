@@ -9,9 +9,6 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Created by fati on 10/8/14.
- */
 public class AutomatedTrader implements TradingAlgorithm{
 
     Lock buildTradeLock = new ReentrantLock();

@@ -2,9 +2,6 @@ package model;
 
 import java.util.Random;
 
-/**
- * Created by fati on 10/8/14.
- */
 public class MarketDataProvider {
 
     public String[] productNames;

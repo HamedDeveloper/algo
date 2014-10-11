@@ -14,15 +14,11 @@ public class PriceEventProducer
 
     public void onData(Price price)
     {
-        long sequence = ringBuffer.next();  // Grab the next sequence
-        try
-        {
-            PriceEvent event = ringBuffer.get(sequence); // Get the entry in the Disruptor
-            // for the sequence
-            event.setPrice(price);  // Fill with data
-        }
-        finally
-        {
+        long sequence = ringBuffer.next();
+        try {
+            PriceEvent event = ringBuffer.get(sequence);
+            event.setPrice(price);
+        } finally {
             ringBuffer.publish(sequence);
         }
     }

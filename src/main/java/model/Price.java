@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Created by fati on 10/8/14.
- */
 public class Price {
 
     private double numericalPrice;

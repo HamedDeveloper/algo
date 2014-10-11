@@ -2,9 +2,6 @@ package disruptor;
 
 import model.Price;
 
-/**
- * Created by fati on 10/10/14.
- */
 public class PriceEvent {
 
     private Price price;
