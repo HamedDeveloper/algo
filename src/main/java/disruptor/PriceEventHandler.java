@@ -25,6 +25,9 @@ public class PriceEventHandler implements TradingAlgorithm, EventHandler<PriceEv
         String productName = newPrice.getProduct().getName();
         double numericPrice = newPrice.getNumericalPrice();
         List<Double> prices = pricesByProductName.get(productName);
+        if (prices == null){
+            prices = new LinkedList<Double>();
+        }
         prices.add(numericPrice);
         int size = prices.size();
         if (size >= 4) {
